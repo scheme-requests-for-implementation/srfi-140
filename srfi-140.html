@@ -484,8 +484,7 @@ in right-to-left order,
 <var>base</var> is the optional rightmost portion of the constructed string,
 and <var>make-final</var> produces the leftmost portion of the
 constructed string.  If <var>mapper</var> returns a string, the string
-is prepended to constructed string, but the characters in the string
-are not reversed.  For example:
+is prepended to the constructed string (without reversal).  For example:
 <pre class="code-example">
 (string-unfold-right null?
                      (lambda (x) (string  #\[ (car x) #\]))
