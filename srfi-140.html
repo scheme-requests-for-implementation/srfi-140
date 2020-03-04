@@ -49,7 +49,8 @@ Per Bothner
   <li>Revised to fix errata:
     <ul>
       <li>2018/11/28 (Fixed four typos ("(stri 140").)</li>
-      <li>2019/4/6 (Fixed return type of <code>string-pad</code>, included <code>read-line</code> and <code>read-string</code> among istring-returning procedures from R7RS, and fixed typo in Libraries section.)</li></ul></li>
+      <li>2019/4/6 (Fixed return type of <code>string-pad</code>, included <code>read-line</code> and <code>read-string</code> among istring-returning procedures from R7RS, and fixed typo in Libraries section.)</li>
+      <li>2020/3/4 (Add note about accumulation of strings in <code>string-unfold-right</code>.)</ul></li>
 </ul>
 
 <h1>Abstract</h1>
@@ -481,8 +482,17 @@ This is a fundamental constructor for strings.
 except the results of <var>mapper</var> are assembled into the string
 in right-to-left order,
 <var>base</var> is the optional rightmost portion of the constructed string,
-and <var>make-final</var> produces the leftmost portion
-of the constructed string
+and <var>make-final</var> produces the leftmost portion of the
+constructed string.  If <var>mapper</var> returns a string, the string
+is prepended to constructed string, but the characters in the string
+are not reversed.  For example:
+<pre class="code-example">
+(string-unfold-right null?
+                     (lambda (x) (string  #\[ (car x) #\]))
+                     cdr
+                     '(#\a #\b #\c))
+   = "[c][b][a]"
+</pre>
 <p>
 <code>string-unfold</code> is a fairly powerful string constructor.
 You can use it to
